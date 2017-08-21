@@ -1,5 +1,7 @@
 # Creates and shows EventRequest records
 class EventRequestsController < ApplicationController
+  respond_to :json
+
   def create
     event_request = event_request_creator.call
     respond_with event_request

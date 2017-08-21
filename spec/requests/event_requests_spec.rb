@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'EventRequests', type: :request do
   describe 'POST #create' do
-    subject { post '/event_requests', params: event_request_params }
+    subject do
+      post '/event_requests.json', params: event_request_params
+    end
 
     let(:owner_name) { 'rails' }
     let(:repo_name) { 'rails' }
@@ -55,9 +57,13 @@ RSpec.describe 'EventRequests', type: :request do
     end
 
     describe 'api response' do
+      before { subject }
+
+      let(:parsed_response) { JSON.parse(response.body) }
+
       context 'with valid params' do
-        it 'returns an http status of 204' do
-          expect(response).to have_http_status(204)
+        it 'returns an http status of 201' do
+          expect(response).to have_http_status(201)
         end
 
         xit 'matches a JSON schema file' do
@@ -69,6 +75,11 @@ RSpec.describe 'EventRequests', type: :request do
         let(:owner_name) { 'Michael Zemel' }
 
         it 'returns an http status of 422' do
+          expect(response).to have_http_status(422)
+        end
+
+        it 'returns errors' do
+          expect(parsed_response['errors']['owner']).to include 'is invalid'
         end
       end
     end
