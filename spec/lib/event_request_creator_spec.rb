@@ -12,7 +12,7 @@ RSpec.describe EventRequestCreator do
     }
   end
 
-  subject { EventRequestCreator.new(params) }
+  subject { EventRequestCreator.new(params).call }
 
   context 'when EventRequest already exists' do
     let(:owner) { create(:owner, name: owner_name) }
@@ -26,7 +26,7 @@ RSpec.describe EventRequestCreator do
     before { event_request.touch }
 
     it 'returns the EventRequest record' do
-      expect(subject.event_request).to eq event_request
+      expect(subject).to eq event_request
     end
   end
 
@@ -34,22 +34,18 @@ RSpec.describe EventRequestCreator do
     context 'when params are invalid' do
       let(:owner_name) { 'Michael Zemel' }
 
-      it 'stores errors on the EventRequest object' do
-      end
-
       it 'returns an invalid EventRequest' do
-        expect(subject.event_request).to_not be_valid
+        expect(subject).to_not be_valid
       end
 
       it 'stores validation messages' do
-        event_request = subject.event_request
-        expect(event_request.errors.full_messages).to include('Owner is invalid')
+        expect(subject.errors.full_messages).to include('Owner is invalid')
       end
     end
 
     context 'when params are valid' do
       it 'creates an EventRequest record' do
-        expect(subject.event_request).to be_valid
+        expect(subject).to be_valid
       end
     end
   end
