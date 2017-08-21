@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :event_request do
-    owner_id 1
-    repo_id 1
-    event_type_id 1
+    owner { create(:owner) }
+    repo { create(:repo) }
+    event_type { create(:event_type) }
   end
 
   factory :event_type do

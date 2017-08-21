@@ -86,4 +86,19 @@ RSpec.describe 'EventRequests', type: :request do
       end
     end
   end
+
+  describe 'GET #index' do
+    subject do
+      get '/event_requests.json'
+    end
+
+    before do
+      create_list(:event_request, 2)
+      subject
+    end
+
+    it 'returns a collection of EventRequests with local data' do
+      expect(response).to match_response_schema('event_requests/locals')
+    end
+  end
 end

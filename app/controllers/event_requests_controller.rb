@@ -2,6 +2,10 @@
 class EventRequestsController < ApplicationController
   respond_to :json
 
+  def index
+    respond_with EventRequest.all, each_serializer: EventRequests::LocalSerializer
+  end
+
   def create
     if event_request.errors.any?
       respond_with event_request, serializer: EventRequests::LocalSerializer
