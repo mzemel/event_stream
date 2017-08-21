@@ -53,5 +53,24 @@ RSpec.describe 'EventRequests', type: :request do
         end
       end
     end
+
+    describe 'api response' do
+      context 'with valid params' do
+        it 'returns an http status of 204' do
+          expect(response).to have_http_status(204)
+        end
+
+        xit 'matches a JSON schema file' do
+          expect(response).to match_response_schema('event_request')
+        end
+      end
+
+      context 'with invalid params' do
+        let(:owner_name) { 'Michael Zemel' }
+
+        it 'returns an http status of 422' do
+        end
+      end
+    end
   end
 end
