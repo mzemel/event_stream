@@ -4,9 +4,11 @@ FactoryGirl.define do
     repo_id 1
     event_type_id 1
   end
+
   factory :event_type do
-    name "MyString"
+    sequence(:name) { |n| "event_type#{n}" }
   end
+
   factory :owner do
     sequence(:name) { |n| "owner#{n}" }
   end
