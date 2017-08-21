@@ -66,8 +66,8 @@ RSpec.describe 'EventRequests', type: :request do
           expect(response).to have_http_status(201)
         end
 
-        xit 'matches a JSON schema file' do
-          expect(response).to match_response_schema('event_request')
+        it 'matches a JSON schema file' do
+          expect(response).to match_response_schema('event_requests/local')
         end
       end
 

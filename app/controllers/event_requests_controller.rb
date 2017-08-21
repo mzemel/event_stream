@@ -4,7 +4,7 @@ class EventRequestsController < ApplicationController
 
   def create
     event_request = event_request_creator.call
-    respond_with event_request
+    respond_with event_request, serializer: EventRequests::LocalSerializer
   end
 
   private

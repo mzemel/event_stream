@@ -10,6 +10,7 @@ gem 'rails', '~> 5.1.3'
 gem 'sqlite3'
 gem 'puma', '~> 3.7'
 gem 'responders'
+gem 'active_model_serializers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -18,6 +19,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda-matchers', '~> 3.1'
   gem 'pry'
+  gem 'json-schema'
 end
 
 group :development do

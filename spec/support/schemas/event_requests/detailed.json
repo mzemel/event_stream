@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": ["event_request"],
+  "properties": {
+    "event_request" : {
+      "type" : "object",
+      "required" : [
+        "event_type",
+        "actor",
+        "created_at",
+        "owner_id",
+        "repo_id",
+        "event_type_id"
+      ],
+      "properties" : {
+        "event_type" : { "type" : "string" },
+        "actor" : { "type" : "object" },
+        "created_at" : { "type" : "string", "format": "date-time" },
+        "owner_id" : { "type" : "number" },
+        "repo_id" : { "type" : "number" },
+        "event_type_id" : { "type" : "number" }
+      }
+    }
+  }
+}

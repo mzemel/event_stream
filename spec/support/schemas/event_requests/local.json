@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "required" : [
+    "owner_id",
+    "repo_id",
+    "event_type_id"
+  ],
+  "properties" : {
+    "owner_id" : { "type" : "number" },
+    "repo_id" : { "type" : "number" },
+    "event_type_id" : { "type" : "number" }
+  }
+}
