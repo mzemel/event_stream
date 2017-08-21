@@ -6,6 +6,10 @@ class EventRequestsController < ApplicationController
     respond_with EventRequest.all, each_serializer: EventRequests::LocalSerializer
   end
 
+  def show
+    respond_with EventRequest.find(params[:id]), serializer: EventRequests::DetailedSerializer
+  end
+
   def create
     if event_request.errors.any?
       respond_with event_request, serializer: EventRequests::LocalSerializer

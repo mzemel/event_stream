@@ -101,4 +101,23 @@ RSpec.describe 'EventRequests', type: :request do
       expect(response).to match_response_schema('event_requests/locals')
     end
   end
+
+  describe 'GET #show' do
+    let(:owner) { create(:owner, name: 'rails') }
+    let(:repo) { create(:repo, name: 'rails') }
+    let(:event_type) { create(:event_type, name: 'IssueCommentEvent') }
+    let(:event_request) { create(:event_request, owner: owner, repo: repo, event_type: event_type) }
+
+    subject do
+      VCR.use_cassette('events') do
+        get "/event_requests/#{event_request.id}.json"
+      end
+    end
+
+    before { subject }
+
+    it 'returns a detailed view of an EventRequest' do
+      expect(response).to match_response_schema('event_requests/detailed')
+    end
+  end
 end
