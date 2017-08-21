@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe 'EventRequests', type: :request do
   describe 'POST #create' do
     subject do
-      post '/event_requests.json', params: event_request_params
+      VCR.use_cassette('events') do
+        post '/event_requests.json', params: event_request_params
+      end
     end
 
     let(:owner_name) { 'rails' }
@@ -67,7 +69,7 @@ RSpec.describe 'EventRequests', type: :request do
         end
 
         it 'matches a JSON schema file' do
-          expect(response).to match_response_schema('event_requests/local')
+          expect(response).to match_response_schema('event_requests/detailed')
         end
       end
 

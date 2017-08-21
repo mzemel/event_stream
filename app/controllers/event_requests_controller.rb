@@ -3,11 +3,18 @@ class EventRequestsController < ApplicationController
   respond_to :json
 
   def create
-    event_request = event_request_creator.call
-    respond_with event_request, serializer: EventRequests::LocalSerializer
+    if event_request.errors.any?
+      respond_with event_request, serializer: EventRequests::LocalSerializer
+    else
+      respond_with event_request, serializer: EventRequests::DetailedSerializer
+    end
   end
 
   private
+
+  def event_request
+    @event_request ||= event_request_creator.call
+  end
 
   def event_request_creator
     @event_request_creator ||= EventRequestCreator.new(
