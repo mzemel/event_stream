@@ -1,0 +1,113 @@
+swagger: "2.0"
+info:
+  description: "EventStream:  The best way to view events for your repos"
+  version: 1.0.0
+  title: EventStream Swagger Docs
+  contact:
+    email: "michael.zemel@gmail.com"
+  license:
+    name: WTFPL
+    url: "http://www.wtfpl.net/ "
+basePath:
+schemes:
+  - http
+paths:
+  /event_requests:
+    post:
+      summary: Create an EventRequest
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          required: true
+          name: owner_name
+        - in: body
+          required: true
+          name: repo_name
+        - in: body
+          required: true
+          name: event_type_name
+      responses:
+        "422":
+          description: Invalid input, returns the local view
+          schema:
+            $ref: '#/definitions/EventRequestLocal'
+        "201":
+          description: Created, and returns EventRequest with data from GitHub
+          schema:
+            $ref: '#/definitions/EventRequestDetailed'
+    get:
+      summary: See all EventRequests, with just local data
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: Collection of EventRequests, with just local data
+          schema:
+            $ref: '#/definitions/EventRequestLocals'
+  "/event_requests/{event_request_id}":
+    get:
+      summary: View an EventRequest
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: EventRequest with data from GitHub
+          schema:
+            $ref: '#/definitions/EventRequestDetailed'
+definitions:
+  Actor:
+    type: object
+    properties:
+      id:
+        type: number
+      login:
+        type: string
+      display_login:
+        type: string
+      gravatar_id:
+        type: string
+      url:
+        type: string
+      avatar_url:
+        type: string
+  Event:
+    type: object
+    properties:
+      actor:
+        type: object
+        $ref: '#/definitions/Actor'
+      event_type:
+        type: string
+      created_at:
+        type: string
+  EventRequestDetailed:
+    properties:
+      owner_id:
+        type: number
+      repo_id:
+        type: number
+      event_type_id:
+        type: number
+      events:
+        type: array
+        items:
+          $ref: '#/definitions/Event'
+  EventRequestLocal:
+    properties:
+      owner_id:
+        type: number
+      repo_id:
+        type: number
+      event_type_id:
+        type: number
+  EventRequestLocals:
+    type: array
+    items:
+      $ref: '#/definitions/EventRequestLocal'
